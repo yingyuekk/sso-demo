@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sso登录</title>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery.easyui.min.js"></script>
+</head>
+<body>
+<div>
+    <input id="user-name-label" name="username"/><br/>
+    <input id="password-label" name="password"/><br/>
+    <button id="login">登录</button>
+</div>
+<script type="text/javascript">
+    $("#login").click(function () {
+        var username = $("[name=username]").val();
+        var password = $("[name=password]").val();
+        $.ajax({
+            url : "/login",
+            type : "post",
+            data : {
+                "username" : username,
+                "password" : password
+            },
+            success : function(data){
+                if (data.status == 200){
+                    if (data.url != null && data.url != ''){
+                        location.href = data.url;
+                    }else {
+                        location.href = "http://localhost:80/index";
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
